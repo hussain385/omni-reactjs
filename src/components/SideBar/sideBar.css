@@ -1,0 +1,13 @@
+.mainContainerSideBar{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
+.container1{
+    width: 15em
+}
+
+.container2{
+    width: 100%;
+}
