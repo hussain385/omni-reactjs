@@ -1,27 +1,50 @@
 import '../App.css';
 import { useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../components/firebase/firebase';
+import { useNavigate } from 'react-router-dom';
+
 
 function Signup() {
   const usernameRef = useRef()
   const confirmPasswordRef = useRef()
   const emailRef = useRef()
   const passwordRef = useRef()
+  const navigate = useNavigate()
+
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    if(confirmPasswordRef.current.value === passwordRef.current.value){
-      toast.success("Signed up successfully!!!", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+    if (confirmPasswordRef.current.value === passwordRef.current.value) {
+      createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
+        .then(() => {
+          toast.success("Signed up successfully!!! Now please login with your credentials", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          navigate('/login')
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          toast.error(errorMessage, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         });
-    }else {
+
+    } else {
       toast.error("Passwords didn't match", {
         position: "top-center",
         autoClose: 5000,
@@ -30,7 +53,7 @@ function Signup() {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
     }
   }
 

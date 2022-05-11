@@ -11,6 +11,7 @@ import Customer from './views/Customer';
 import Inventory from './views/Inventory';
 import Setting from './views/Setting';
 import Reciepts from './views/Reciepts';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
